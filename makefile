@@ -3,12 +3,13 @@ NAME = kernel
 BUILD = build
 
 # flags
-CC = aarch64-linux-gnu-gcc
-LD = aarch64-linux-gnu-ld
-OBJCOPY = aarch64-linux-gnu-objcopy
+CC = aarch64-none-elf-gcc
+LD = aarch64-none-elf-ld
+OBJCOPY = aarch64-none-elf-objcopy
 
 C_FLAGS = -ffreestanding -nostdlib -nostartfiles \
-		  -fno-omit-frame-pointer
+		  -fno-omit-frame-pointer -fno-unwind-tables \
+		  -fno-asynchronous-unwind-tables
 S_FLAGS = -march=armv8-a
 LD_FLAGS = -z max-page-size=4096 -Map $(MAP)
 
