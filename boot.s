@@ -1,6 +1,4 @@
 .section .text
-.align 4
-
 .global _start
 _start:
 	msr daifset, #0xf		// disable interrupts
