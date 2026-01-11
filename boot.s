@@ -1,18 +1,21 @@
 .section .text
 .global _start
 _start:
-	msr daifset, #0xf		// disable interrupts
+	/* disable interrupts */
+	msr daifset, #0xf
 
 	ldr x0, =__stack_top
-	mov sp, x0				// temporary stack
+	/* temporary stack */
+	mov sp, x0
 
 	ldr x0, =__bss_start
 	ldr x1, =__bss_end
 bss_loop:
 	cmp x0, x1
 	b.hs bss_done
-	strb wzr, [x0], #1		// write 0 then increase pointer by 1
-	b bss_loop				// while in bss
+	/* write 0 then increase pointer by 1 while in bss */
+	strb wzr, [x0], #1
+	b bss_loop
 
 bss_done:
 
@@ -21,8 +24,9 @@ bss_done:
 		use mmu
 	*/
 
-	bl kmain				// branch to kernel main
+	/* branch to kernel main */
+	bl kmain
 
 cpu_hang:
 	wfi
-	b cpu_hang				// error handler if kmain returns
+	b cpu_hang
