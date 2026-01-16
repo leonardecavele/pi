@@ -2,6 +2,7 @@
 NAME = kernel
 BUILD = build
 SRCS = srcs
+OUT = boot
 
 # flags
 CC = aarch64-none-elf-gcc
@@ -22,7 +23,7 @@ C_SRCS = \
 		 kmain.c
 
 LD_SCRIPT = kernel.ld
-IMG = $(NAME).img
+IMG = $(OUT)/$(NAME).img
 MAP = $(NAME).map
 ELF = $(BUILD)/$(NAME).elf
 
