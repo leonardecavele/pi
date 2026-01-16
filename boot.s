@@ -4,6 +4,15 @@ _start:
 	/* disable interrupts */
 	msr daifset, #0xf
 
+	/* fetch CPU data */
+	mrs x0, mpidr_el1
+	/* keep 2 least significant bits */
+	and x0, x0, #3
+	cbz x0, cpu0
+	/* branch to hang if not cpu 0 */
+	b cpu_hang
+cpu0:
+
 	ldr x0, =__stack_top
 	/* temporary stack */
 	mov sp, x0
