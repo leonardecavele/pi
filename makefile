@@ -1,6 +1,7 @@
 # structure
 NAME = kernel
 BUILD = build
+SRCS = srcs
 
 # flags
 CC = aarch64-none-elf-gcc
@@ -36,11 +37,11 @@ $(IMG): $(C_OBJS) $(S_OBJS) $(LD_SCRIPT)
 	$(OBJCOPY) $(ELF) -O binary $(IMG)
 	truncate -s %512 $(IMG)
 
-$(BUILD)/%.o: %.s
+$(BUILD)/%.o: $(SRCS)/%.s
 	mkdir -p $(BUILD)
 	$(CC) -c $< -o $@ $(S_FLAGS)
 
-$(BUILD)/%.o: %.c
+$(BUILD)/%.o: $(SRCS)/%.c
 	mkdir -p $(BUILD)
 	$(CC) -c $< -o $@ $(C_FLAGS)
 
