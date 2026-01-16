@@ -1,4 +1,5 @@
 int kmain(void)
 {
-	return 0;
+	// hang
+	while (1) { }
 }
