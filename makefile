@@ -34,6 +34,7 @@ all: $(IMG)
 $(IMG): $(C_OBJS) $(S_OBJS) $(LD_SCRIPT)
 	$(LD) -T $(LD_SCRIPT) -o $(ELF) $(S_OBJS) $(C_OBJS) $(LD_FLAGS)
 	$(OBJCOPY) $(ELF) -O binary $(IMG)
+	truncate -s %512 $(IMG)
 
 $(BUILD)/%.o: %.s
 	mkdir -p $(BUILD)
