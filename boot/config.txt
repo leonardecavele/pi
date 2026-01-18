@@ -2,3 +2,4 @@ arm_64bit=1
 kernel_address=0x200000
 kernel=kernel.img
 device_tree=bcm2712-rpi-5-b.dtb
+uart_2ndstage=1
