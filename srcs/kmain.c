@@ -1,5 +1,5 @@
 int kmain(void)
 {
-	// hang
+	/* cpu hang */
 	while (1) { }
 }
