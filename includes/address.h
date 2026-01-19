@@ -15,6 +15,4 @@
 #  define SET_OFFSET	0x2000u
 #  define CLR_OFFSET	0x3000u
 
-void regset_rw32(uintptr_t adr, uint32_t mask, uint32_t v);
-
 # endif
