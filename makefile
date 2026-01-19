@@ -3,13 +3,15 @@ NAME = kernel
 BUILD = build
 SRCS = srcs
 OUT = boot
+INCLUDES = includes
 
 # flags
 CC = aarch64-none-elf-gcc
 LD = aarch64-none-elf-ld
 OBJCOPY = aarch64-none-elf-objcopy
 
-C_FLAGS = -ffreestanding -nostdlib -nostartfiles \
+C_FLAGS = -I $(INCLUDES) \
+		  -ffreestanding -nostdlib -nostartfiles \
 		  -fno-omit-frame-pointer -fno-unwind-tables \
 		  -fno-asynchronous-unwind-tables
 S_FLAGS = -march=armv8-a
