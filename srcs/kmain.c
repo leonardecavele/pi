@@ -50,7 +50,7 @@ int kmain(void)
 	//	while(1) {} 
 	//}
 
-	turn_on(23, rp1);
+	//turn_on(23, rp1);
 
 	/* cpu hang */
 	while (1) {}
