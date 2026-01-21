@@ -22,10 +22,13 @@ S_SRCS = \
 		 boot.s
 
 C_SRCS = \
-		 kmain.c
+		 kmain.c \
+		 uart.c \
+		 pcie_scan.c
 
 LD_SCRIPT = kernel.ld
 IMG = $(OUT)/$(NAME).img
+TMP = $(IMG).tmp
 MAP = $(NAME).map
 ELF = $(BUILD)/$(NAME).elf
 
@@ -38,7 +41,7 @@ all: $(IMG)
 $(IMG): $(C_OBJS) $(S_OBJS) $(LD_SCRIPT)
 	$(LD) -T $(LD_SCRIPT) -o $(ELF) $(S_OBJS) $(C_OBJS) $(LD_FLAGS)
 	$(OBJCOPY) $(ELF) -O binary $(IMG)
-	truncate -s %512 $(IMG)
+	dd if=$(IMG) of=$(TMP) bs=512 conv=sync && mv $(TMP) $(IMG)
 
 $(BUILD)/%.o: $(SRCS)/%.s
 	mkdir -p $(BUILD)

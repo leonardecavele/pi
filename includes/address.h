@@ -1,18 +1,21 @@
 #ifndef ADDRESS_H
 # define ADDRESS_H
 
-#  include <stdint.h>
+#  include "standard.h"
 
-#  define REG1B(adr)	(*(volatile uint8_t  *)(uintptr_t)(adr))
-#  define REG2B(adr)	(*(volatile uint16_t *)(uintptr_t)(adr))
-#  define REG4B(adr)	(*(volatile uint32_t *)(uintptr_t)(adr))
-#  define REG8B(adr)	(*(volatile uint64_t *)(uintptr_t)(adr))
+/* cast a numeric value as an address */
+#  define UADDR(a)		((uintptr_t)(a))
 
-#  define IO_BANK0		0x400d0000u
+/* rw register at address */
+#  define REG1B(a)		(*(volatile uint8_t  *)UADDR((a)))
+#  define REG2B(a)		(*(volatile uint16_t *)UADDR((a)))
+#  define REG4B(a)		(*(volatile uint32_t *)UADDR((a)))
+#  define REG8B(a)		(*(volatile uint64_t *)UADDR((a)))
 
-#  define RW_OFFSET		0x0000u
-#  define XOR_OFFSET	0x1000u
-#  define SET_OFFSET	0x2000u
-#  define CLR_OFFSET	0x3000u
+/* atomic registers */
+#  define RW_OFFSET		UADDR(0x0000)
+#  define XOR_OFFSET	UADDR(0x1000)
+#  define SET_OFFSET	UADDR(0x2000)
+#  define CLR_OFFSET	UADDR(0x3000)
 
 # endif

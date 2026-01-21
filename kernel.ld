@@ -3,7 +3,7 @@ ENTRY(_start)
 SECTIONS
 {
 	/* kernel address */
-	. = 0x200000;
+	. = 0x80000;
 
 	.text ALIGN(16) : {
 	  *(.text*)
