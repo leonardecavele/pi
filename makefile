@@ -24,7 +24,7 @@ S_SRCS = \
 C_SRCS = \
 		 kmain.c \
 		 uart.c \
-		 pcie_scan.c
+		 pcie.c
 
 LD_SCRIPT = kernel.ld
 IMG = $(OUT)/$(NAME).img
