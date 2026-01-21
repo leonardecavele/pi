@@ -1,7 +1,8 @@
 #ifndef RP1_PADS_H
 # define RP1_PADS_H
 
-#define RP1_PADS_GPIO(a) \
+   /* get pads address of gpio 'a' */
+#  define RP1_PADS_GPIO(a) \
 	(PADS_BANK0 + 0x04u + (uint32_t)(a) * 4u)
 
 typedef enum e_rp1_pads_shift {

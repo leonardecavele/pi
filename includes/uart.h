@@ -5,7 +5,8 @@
 #  include "address.h"
 #  include "bcm2712.h"
 
-#define UART_GET_BIT(a, b, c) \
+   /* get bit 'c' from uart register 'a' + offset 'b' */
+#  define UART_GET_BIT(a, b, c) \
     ((REG4B((a) + (b)) >> (uint32_t)(c)) & 1u)
 
 typedef enum e_uart_offset {

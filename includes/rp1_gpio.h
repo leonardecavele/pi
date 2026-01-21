@@ -3,9 +3,12 @@
 
 #  include "rp1.h"
 
+   /* get status address of gpio 'a' */
 #  define RP1_GPIO_STATUS(a)	(IO_BANK0 + 0x0b8u + (uint32_t)(a) * 8)
+   /* get control address of gpio 'a' */
 #  define RP1_GPIO_CTRL(a)		(IO_BANK0 + 0x0bcu + (uint32_t)(a) * 8)
 
+   /* get status bit 'b' of gpio 'a' */
 #  define RP1_GPIO_STATUS_BIT(a, b) \
     ((REG4B(RP1_GPIO_STATUS((a))) >> (uint32_t)(b)) & 1u)
 
