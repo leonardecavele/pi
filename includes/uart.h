@@ -1,12 +1,15 @@
 #ifndef UART_H
-# define UART_H
+#define UART_H
 
-#  include "standard.h"
-#  include "address.h"
-#  include "bcm2712.h"
+#include "standard.h"
+#include "address.h"
+#include "bcm2712.h"
 
-   /* get bit 'c' from uart register 'a' + offset 'b' */
-#  define UART_GET_BIT(a, b, c) \
+#define BASE10 "0123456789"
+#define BASE16 "0123456789abcdef"
+
+/* get bit 'c' from uart register 'a' + offset 'b' */
+#define UART_GET_BIT(a, b, c) \
     ((REG4B((a) + (b)) >> (uint32_t)(c)) & 1u)
 
 typedef enum e_uart_offset {

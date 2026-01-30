@@ -1,5 +1,5 @@
 #ifndef RP1_RIO_H
-# define RP1_RIO_H
+#define RP1_RIO_H
 
 typedef enum e_rp1_rio_offset {
     OUT_OFFSET = 0x00u,
