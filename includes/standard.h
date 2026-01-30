@@ -6,4 +6,6 @@
 
 typedef unsigned int uint_t;
 
+uint64_t strlen(const char *s);
+
 #endif
