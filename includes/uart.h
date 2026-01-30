@@ -21,6 +21,9 @@ typedef enum e_uart_fr_bit {
     FR_TXFF = 5
 } t_a_fr_bit;
 
+void uart_putc(uintptr_t t, char c);
+void uart_putstr(uintptr_t t, const char *s);
+void uart_putnbr(uintptr_t t, int64_t n, const char *base, uint64_t len);
 void uart_printf(uintptr_t t, const char *s, ...);
 
 #endif

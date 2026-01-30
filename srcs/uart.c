@@ -2,19 +2,19 @@
 #include "address.h"
 #include "uart.h"
 
-static void uart_putc(uintptr_t t, char c)
+extern void uart_putc(uintptr_t t, char c)
 {
 	while (UART_GET_BIT(t, FR_OFFSET, FR_TXFF)) { }
     REG4B(t + DR_OFFSET) = (uint32_t)(unsigned char)c;
 }
 
-static void uart_putstr(uintptr_t t, const char *s)
+extern void uart_putstr(uintptr_t t, const char *s)
 {
     while ((char c = *s++))
     	uart_putc(c, t);
 }
 
-static void uart_putnbr(uintptr_t t, int64_t n, char *base, int len)
+extern void uart_putnbr(uintptr_t t, int64_t n, const char *base, uint64_t len)
 {
 	if (n < 0) { uart_putc(t, '-'); n = -n; }
 	if (n >= len) { uart_putnbr(t, n / len); }
