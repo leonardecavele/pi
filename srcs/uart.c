@@ -10,14 +10,16 @@ extern void uart_putc(uintptr_t t, char c)
 
 extern void uart_putstr(uintptr_t t, const char *s)
 {
-    while ((char c = *s++))
+	char	c;
+
+    while ((c = *s++))
     	uart_putc(c, t);
 }
 
 extern void uart_putnbr(uintptr_t t, int64_t n, const char *base, uint64_t len)
 {
 	if (n < 0) { uart_putc(t, '-'); n = -n; }
-	if (n >= len) { uart_putnbr(t, n / len); }
+	if (n >= len) { uart_putnbr(t, n / len, base, len); }
 	uart_putc(t, (char)(base[n % len]));
 }
 
@@ -25,7 +27,7 @@ static void uart_putpm(uintptr_t t, va_list pm, char c)
 {
 	switch (c) {
 		case 'c':
-			uart_putc(t, va_arg(pm, int)); break
+			uart_putc(t, va_arg(pm, int)); break;
 		case 's':
 			uart_putstr(t, va_arg(pm, const char *)); break;
 		case 'p':
@@ -40,7 +42,7 @@ static void uart_putpm(uintptr_t t, va_list pm, char c)
 		case 'X':
 			uart_putnbr(t, (uint64_t)va_arg(pm, uint_t), BASE16, 16); break;
 		case '%':
-			uartputc(t, '%'); break;
+			uart_putc(t, '%'); break;
 	}
 }
 
