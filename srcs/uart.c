@@ -13,36 +13,43 @@ extern void uart_putstr(uintptr_t t, const char *s)
 	char	c;
 
     while ((c = *s++))
-    	uart_putc(c, t);
+    	uart_putc(t, c);
 }
 
-extern void uart_putnbr(uintptr_t t, int64_t n, const char *base, uint64_t len)
+extern void uart_putnbr(uintptr_t t, int64_t n, const char *b, uint64_t l)
 {
 	if (n < 0) { uart_putc(t, '-'); n = -n; }
-	if (n >= len) { uart_putnbr(t, n / len, base, len); }
-	uart_putc(t, (char)(base[n % len]));
+	if (n >= l) { uart_putnbr(t, n / l, b, l); }
+	uart_putc(t, (b[n % l]));
 }
 
-static void uart_putpm(uintptr_t t, va_list pm, char c)
+extern void uart_putunbr(uintptr_t t, uint64_t n, const char *b, uint64_t l)
+{
+	if (n >= l) { uart_putunbr(t, n / l, b, l); }
+	uart_putc(t, (b[n % l]));
+}
+
+static void uart_putpm(uintptr_t t, va_list *pm, char c)
 {
 	switch (c) {
-		case 'c':
-			uart_putc(t, va_arg(pm, int)); break;
-		case 's':
-			uart_putstr(t, va_arg(pm, const char *)); break;
 		case 'p':
-			uart_putnbr(t, (uint64_t)va_arg(pm, void *), BASE16, 16); break;
+			uart_putstr(t, "0x");
+			uart_putunbr(t, (uintptr_t)va_arg(*pm, void *), BASE16, 16);
+			break;
+		case 'c':
+			uart_putc(t, va_arg(*pm, int)); break;
+		case 's':
+			uart_putstr(t, va_arg(*pm, const char *)); break;
 		case 'd':
-		case 'i':
-			uart_putnbr(t, va_arg(pm, int), BASE10, 10); break;
+			uart_putnbr(t, va_arg(*pm, int), BASE10, 10); break;
 		case 'u':
-			uart_putnbr(t, va_arg(pm, uint_t), BASE10, 10); break;
+			uart_putunbr(t, va_arg(*pm, uint_t), BASE10, 10); break;
 		case 'x':
-			uart_putnbr(t, (uint64_t)va_arg(pm, uint_t), BASE16, 16); break;
-		case 'X':
-			uart_putnbr(t, (uint64_t)va_arg(pm, uint_t), BASE16, 16); break;
+			uart_putunbr(t, va_arg(*pm, uint_t), BASE16, 16); break;
 		case '%':
 			uart_putc(t, '%'); break;
+		default:
+			uart_putstr(t, "{unknown type}"); break;
 	}
 }
 
@@ -52,7 +59,7 @@ extern void uart_printf(uintptr_t t, const char *s, ...)
 
 	va_start(pm, s);
 	do {
-		if (*s == '%') { uart_putpm(t, pm, *++s); }
+		if (*s == '%') { uart_putpm(t, &pm, *++s); }
 		else { uart_putc(t, *s); }
 	} while (*s++);
 	va_end(pm);
