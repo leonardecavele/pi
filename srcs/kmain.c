@@ -40,9 +40,11 @@ static void	turn_on(uint32_t GPIO, uint64_t rp1)
 		1u << DRIVE_SHIFT;
 }
 
-int kmain(void)
+int kmain(uintptr_t dtb)
 {
 	uart_printf(BCM2712_UART, "hello %s %d %l\r\n", "world", 42);
+	uart_printf(BCM2712_UART, "%x\r\n", dtb);
+	uart_printf(BCM2712_UART, "%x\r\n", REG4B(dtb));
 
 	//uint64_t rp1 = // get rp1 base address
 	//if (!rp1) {
