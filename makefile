@@ -13,7 +13,8 @@ OBJCOPY = aarch64-none-elf-objcopy
 C_FLAGS = -I $(INCLUDES) \
 		  -ffreestanding -nostdlib -nostartfiles \
 		  -fno-omit-frame-pointer -fno-unwind-tables \
-		  -fno-asynchronous-unwind-tables
+		  -fno-asynchronous-unwind-tables -fno-builtin-memset \
+		  -fno-builtin-memcpy -mgeneral-regs-only
 S_FLAGS = -march=armv8-a
 LD_FLAGS = -z max-page-size=4096 -Map $(MAP)
 
@@ -24,7 +25,9 @@ S_SRCS = \
 C_SRCS = \
 		 kmain.c \
 		 uart.c \
-		 pcie.c
+		 pcie.c \
+		 dtb.c \
+		 standard.c
 
 LD_SCRIPT = kernel.ld
 IMG = $(OUT)/$(NAME).img
